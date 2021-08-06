@@ -112,7 +112,7 @@ async def ip(ctx):
 @commands.is_owner()
 async def run(ctx, arg):
     if arg in runAllowed:
-        subprocess.call('C:\Windows\System32\WindowsPowerShell\\v1.0\powershell.exe G:\Projects\discordbot\\run\\' +arg +".lnk", shell=True)
+        subprocess.call('C:\Windows\System32\WindowsPowerShell\\v1.0\powershell.exe \PATH\TO\run\\' +arg +".lnk", shell=True)
     ToastNotifier().show_toast("PcControl","Script ran " + arg, icon_path="notification.ico" ,duration=None)
     await clearHistory(selectedMessage=[0])
 
