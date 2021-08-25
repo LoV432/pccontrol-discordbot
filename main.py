@@ -7,6 +7,7 @@ import subprocess
 import edit_image
 import asyncio
 from notification import ToastNotifier
+import ctypes
 
 allowed_server_role = 'ALLOWED SERVER ROLE HERE'
 
@@ -83,8 +84,7 @@ async def shutdown(ctx):
 @commands.is_owner()
 async def s(ctx):
     try:
-        move(0,50)
-        move(0,-50)
+        ctypes.windll.kernel32.SetThreadExecutionState(0x00000002)
         screenshot().save("discord.png")
         ToastNotifier().show_toast("PcControl","SS TAKEN",icon_path="notification.ico",duration=None)
         await ctx.send(file=discord.File('discord.png'))
