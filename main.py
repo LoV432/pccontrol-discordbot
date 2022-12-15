@@ -16,7 +16,7 @@ async def deleteMessage(lastMessage,selectedMessage):
         await lastMessage[message].delete()
 
 async def clearHistory(selectedMessage):
-    lastMessage = await pccontrol.history(limit=2).flatten()
+    lastMessage = [message async for message in pccontrol.history(limit=2)]
     await asyncio.sleep(10)
     await deleteMessage(lastMessage,selectedMessage)
 
@@ -45,7 +45,11 @@ async def getChannelUser():
 killAllowed = ["notepad"]
 runAllowed = ["notepad" ]
 
-bot = commands.Bot(command_prefix=".")
+intents = discord.Intents.default()
+intents.messages = True
+intents.message_content = True
+
+bot = commands.Bot(command_prefix=".",intents=intents)
 
 @bot.event
 async def on_ready():
@@ -89,7 +93,7 @@ async def s(ctx):
         ToastNotifier().show_toast("PcControl","SS TAKEN",icon_path="notification.ico",duration=None)
         await ctx.send(file=discord.File('discord.png'))
         await ctx.send("SS")
-        lastMessage = await pccontrol.history(limit=3).flatten()
+        lastMessage = [message async for message in pccontrol.history(limit=3)]
         await lastMessage[0].add_reaction('\N{THUMBS UP SIGN}',)
         await asyncio.sleep(10)
         await deleteMessage(lastMessage,selectedMessage=[1,2])
